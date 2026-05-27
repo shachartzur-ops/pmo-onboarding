@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0a1e05">
+<title>קליטת PMO חדש — תמה</title>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════
+   RESET & VARIABLES
+═══════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --green:        #2d5a27;
+  --green-mid:    #4a8c3f;
+  --green-bright: #6dbf67;
+  --dark-base:    #0a1e05;
+  --dark-header:  rgba(12,26,6,0.97);
+  --dark-card:    rgba(10,30,5,0.88);
+  --dark-item:    rgba(8,22,4,0.75);
+  --border:       rgba(45,90,39,0.8);
+  --border-dim:   rgba(74,140,63,0.3);
+  --text:         #ffffff;
+  --text-soft:    #cce8c8;
+  --text-dim:     #7aaa74;
+  --r:            12px;
+  --r-sm:         8px;
+  --shadow:       0 4px 24px rgba(0,0,0,0.5);
+}
+
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+/* ═══════════════════════════════════════
+   BODY / BACKGROUND
+═══════════════════════════════════════ */
+body {
+  font-family: 'Heebo', sans-serif;
+  background-color: var(--dark-base);
+  background-image:
+    linear-gradient(rgba(0,0,0,0.62), rgba(0,0,0,0.62)),
+    url('bg.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  color: var(--text);
+  min-height: 100vh;
+  direction: rtl;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ═══════════════════════════════════════
+   HEADER
+═══════════════════════════════════════ */
+.site-header {
+  background: var(--dark-header);
+  border-bottom: 3px solid var(--green-mid);
+  padding: 0 20px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 20px rgba(0,0,0,0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 13px 0;
+}
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  flex-shrink: 0;
+}
+.header-logo {
+  height: 28px;
+  width: auto;
+  filter: brightness(0) invert(1);
+  display: block;
+}
+.header-brand {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #fff;
+  white-space: nowrap;
+  letter-spacing: 0.2px;
+}
+.header-left {
+  direction: ltr;
+  text-align: left;
+  min-width: 0;
+}
+.header-title {
+  font-size: clamp(1.1rem, 4vw, 2.2rem);
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.4px;
+  line-height: 1.1;
+  white-space: nowrap;
+}
+.header-sub {
+  font-size: clamp(0.65rem, 2vw, 0.88rem);
+  color: var(--green-bright);
+  margin-top: 4px;
+  font-weight: 400;
+  direction: rtl;
+  text-align: right;
+  white-space: nowrap;
+}
+
+/* ═══════════════════════════════════════
+   PROGRESS BAR
+═══════════════════════════════════════ */
+.progress-wrap {
+  background: rgba(6,18,3,0.92);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 9px 20px;
+  border-bottom: 1px solid var(--border-dim);
+  position: sticky;
+  top: 70px;
+  z-index: 99;
+}
+.progress-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+  font-size: 0.8rem;
+  color: var(--text-dim);
+}
+.progress-row strong { color: var(--green-bright); font-weight: 700; }
+.progress-track {
+  height: 5px;
+  background: rgba(45,90,39,0.22);
+  border-radius: 99px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--green), var(--green-mid));
+  border-radius: 99px;
+  transition: width 0.4s ease;
+  box-shadow: 0 0 8px rgba(74,140,63,0.55);
+  width: 0%;
+}
+
+/* ═══════════════════════════════════════
+   LAYOUT
+═══════════════════════════════════════ */
+.container {
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 16px 12px 64px;
+}
+
+/* ═══════════════════════════════════════
+   TABS
+═══════════════════════════════════════ */
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+.tab {
+  padding: 6px 11px;
+  border-radius: 20px;
+  border: 1.5px solid var(--border-dim);
+  background: rgba(12,28,6,0.75);
+  color: var(--text-dim);
+  font-size: 0.78rem;
+  font-family: 'Heebo', sans-serif;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.18s;
+  white-space: nowrap;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+.tab:hover  { border-color: var(--green-mid); color: var(--text-soft); background: rgba(45,90,39,0.3); }
+.tab.active { background: var(--green); border-color: var(--green-mid); color: #fff; box-shadow: 0 2px 10px rgba(74,140,63,0.4); }
+.badge {
+  font-size: 0.68rem;
+  padding: 1px 5px;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.18);
+  font-weight: 600;
+  margin-right: 3px;
+}
+
+/* ═══════════════════════════════════════
+   CARD
+═══════════════════════════════════════ */
+.card {
+  background: var(--dark-card);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 18px 16px;
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+.card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 16px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border-dim);
+}
+.card-header-left { display: flex; align-items: center; gap: 10px; }
+.card-icon {
+  width: 36px; height: 36px;
+  background: linear-gradient(135deg, var(--green), var(--green-mid));
+  border-radius: 9px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem;
+  flex-shrink: 0;
+  box-shadow: 0 2px 10px rgba(74,140,63,0.4);
+}
+.card-title    { font-size: 1.05rem; font-weight: 700; color: #fff; line-height: 1.2; }
+.card-subtitle { font-size: 0.73rem; color: var(--text-dim); margin-top: 3px; }
+.card-prog     { font-size: 0.75rem; color: var(--text-dim); font-weight: 600; white-space: nowrap; padding-top: 2px; }
+
+/* ═══════════════════════════════════════
+   ITEMS
+═══════════════════════════════════════ */
+.items { display: flex; flex-direction: column; gap: 7px; }
+
+.item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 13px 13px;
+  min-height: 52px;
+  border-radius: var(--r-sm);
+  border: 1px solid var(--border-dim);
+  background: var(--dark-item);
+  cursor: pointer;
+  transition: border-color 0.18s, background 0.18s;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+.item:active { background: rgba(45,90,39,0.25); }
+.item.done   { background: rgba(30,70,20,0.3); border-color: rgba(45,140,39,0.55); }
+
+.chk {
+  width: 22px; height: 22px;
+  border: 2px solid var(--border-dim);
+  border-radius: 6px;
+  flex-shrink: 0;
+  margin-top: 2px;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.15s;
+  background: rgba(8,20,4,0.6);
+}
+.item.done .chk { background: var(--green-mid); border-color: var(--green-bright); }
+.chk svg { display: none; }
+.item.done .chk svg { display: block; }
+
+.item-body { flex: 1; min-width: 0; }
+.item-text {
+  font-size: 0.88rem;
+  color: var(--text-soft);
+  line-height: 1.48;
+  font-weight: 500;
+}
+.item.done .item-text { color: var(--text-dim); text-decoration: line-through; }
+.item-owner {
+  font-size: 0.72rem;
+  color: var(--text-dim);
+  margin-top: 4px;
+  font-weight: 400;
+}
+.item-note {
+  font-size: 0.73rem;
+  color: var(--green-bright);
+  margin-top: 5px;
+  padding: 4px 9px;
+  background: rgba(74,140,63,0.1);
+  border-radius: 4px;
+  border-right: 2px solid var(--green-mid);
+  line-height: 1.4;
+}
+
+/* ═══════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════ */
+.page-footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin-top: 14px;
+}
+.reset-btn {
+  background: none;
+  border: 1.5px solid var(--border-dim);
+  color: var(--text-dim);
+  font-size: 0.8rem;
+  padding: 6px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-family: 'Heebo', sans-serif;
+  transition: all 0.15s;
+  touch-action: manipulation;
+}
+.reset-btn:hover { border-color: #e74c3c; color: #ff9999; }
+.save-label { font-size: 0.68rem; color: rgba(74,140,63,0.3); }
+
+/* ═══════════════════════════════════════
+   DESKTOP  ≥ 700px
+═══════════════════════════════════════ */
+@media (min-width: 700px) {
+  body { background-attachment: fixed; }
+  .site-header  { padding: 0 44px; }
+  .header-inner { padding: 18px 0; gap: 28px; }
+  .header-logo  { height: 42px; }
+  .header-brand { font-size: 1.15rem; }
+  .progress-wrap{ top: 96px; padding: 11px 44px; }
+  .container    { padding: 24px 20px 80px; }
+  .tabs         { gap: 5px; margin-bottom: 18px; }
+  .tab          { font-size: 0.75rem; padding: 6px 13px; }
+  .card         { padding: 24px 26px; }
+  .card-header  { margin-bottom: 20px; padding-bottom: 16px; }
+  .card-icon    { width: 40px; height: 40px; font-size: 1.1rem; border-radius: 10px; }
+  .card-title   { font-size: 1.1rem; }
+  .card-subtitle{ font-size: 0.78rem; }
+  .card-prog    { font-size: 0.8rem; }
+  .item         { padding: 12px 15px; }
+  .item-text    { font-size: 0.9rem; }
+  .item-owner   { font-size: 0.74rem; }
+  .item-note    { font-size: 0.76rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="header-inner">
+    <div class="header-right">
+      <img src="https://www.tama.group/wp-content/themes/tama-website/images/logosvg.svg"
+           alt="Tama Group" class="header-logo">
+      <span class="header-brand">Tama Group</span>
+    </div>
+    <div class="header-left">
+      <div class="header-title">Engineering Department</div>
+      <div class="header-sub">קליטת עובד חדש &mdash; מנהל פרויקטים למחלקת הנדסה PMO</div>
+    </div>
+  </div>
+</header>
+
+<!-- PROGRESS -->
+<div class="progress-wrap">
+  <div class="progress-row">
+    <span>התקדמות קליטה</span>
+    <strong id="prog-pct">0%</strong>
+  </div>
+  <div class="progress-track">
+    <div class="progress-fill" id="prog-fill"></div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="container">
+  <div class="tabs" id="tabs"></div>
+  <div class="card">
+    <div class="card-header">
+      <div class="card-header-left">
+        <div class="card-icon" id="sec-icon"></div>
+        <div>
+          <div class="card-title" id="sec-title"></div>
+          <div class="card-subtitle" id="sec-sub"></div>
+        </div>
+      </div>
+      <div class="card-prog" id="sec-prog"></div>
+    </div>
+    <div class="items" id="items-list"></div>
+  </div>
+  <div class="page-footer">
+    <button class="reset-btn" onclick="resetAll()">איפוס רשימה</button>
+    <span class="save-label">נשמר אוטומטית</span>
+  </div>
+</div>
+
+<script>
+const S = [
+  {id:"pre", icon:"📋", title:"לפני ההגעה", sub:"אחריות: שחר", items:[
+    {id:"pre1", text:"פתיחת קריאה ל-IT: laptop + חשבון M365 + כתובת מייל", owner:"שחר → IT", note:"IT לוקחים 3-5 ימי עסקים — לרוץ קדימה"},
+    {id:"pre2", text:"בקשת גישה ל-SharePoint: אתר צוות + תיקיות פרויקטים + רשימות משימות", owner:"שחר → IT"},
+    {id:"pre3", text:"הכנת ציוד שולחן: 2 מסכים, עגינה, מקלדת, עכבר, headset", owner:"שחר"},
+    {id:"pre4", text:"הוספה לרשימות תפוצה: צוות הנדסה + ועדות רלוונטיות + קבלנים שוטפים", owner:"שחר"},
+    {id:"pre5", text:"הזמנת ביומן: 1-on-1 ליום ראשון 09:00 (60 דק') + שבוע onboarding", owner:"שחר"},
+    {id:"pre6", text:"תאום עם HR: כרטיס כניסה, נהלי בטיחות, ניירת קליטה", owner:"שחר → HR"},
+    {id:"pre7", text:"הכנת תיק קבלת פנים (ראה מדור מסמכים, נהלים וכלי עבודה)", owner:"שחר"},
+  ]},
+  {id:"equip", icon:"🖥️", title:"ציוד", sub:"הכל מוכן לפני יום ראשון", items:[
+    {id:"eq1", text:"Laptop (תקן ארגוני) + מטען + תיק נשיאה", owner:"IT"},
+    {id:"eq2", text:"2 מסכים חיצוניים", owner:"שחר / IT", note:"PMO מנהל פרויקטים במקביל — ריאל אסטייט על מסך הוא כלי עבודה, לא נוחות"},
+    {id:"eq3", text:"Docking station", owner:"IT"},
+    {id:"eq4", text:"מקלדת + עכבר", owner:"שחר"},
+    {id:"eq5", text:"טלפון שולחני + שלוחה פנימית רשומה", owner:"IT"},
+    {id:"eq6", text:"Headset ל-Teams (ישיבות היברידיות)", owner:"שחר"},
+    {id:"eq7", text:"מחברת + עטים", owner:"שחר"},
+    {id:"eq8", text:"קליבר", owner:"שחר"},
+    {id:"eq9", text:"מטר", owner:"שחר"},
+  ]},
+  {id:"access", icon:"🔐", title:"תוכנות והרשאות", sub:"לאמת שהכל עובד ביום 1 — לא אחרי", items:[
+    {id:"acc1", text:"M365: Outlook, Teams, SharePoint, Excel, Word, PowerPoint — רישיון פעיל ומחובר", owner:"IT"},
+    {id:"acc2", text:"M365 Copilot Pro — הוסף לרישיון (כבר קיים בצוות)", owner:"IT"},
+    {id:"acc3", text:"SharePoint: גישת עריכה — אתר הנדסה + כל תיקיות פרויקטים פעילים", owner:"IT / שחר"},
+    {id:"acc4", text:"SharePoint: גישת קריאה — אתרי ועדות (ועדת משנה, מחוזית)", owner:"IT"},
+    {id:"acc5", text:"Planner / Lists: גישה לכל לוחות הצוות הפעילים", owner:"IT"},
+    {id:"acc6", text:"לוחות שנה: הוסף לכל לוחות הצוות הרלוונטיים", owner:"שחר"},
+    {id:"acc7", text:"Harmony — חיבור מרחוק", owner:"IT"},
+    {id:"acc8", text:"SolidWorks Viewer + PDM Viewer — משתמש Viewer בלבד", owner:"IT", note:"לא רישיון מלא — Viewer מספיק לצרכי PMO"},
+    {id:"acc9", text:"Oracle — פתיחת משתמש (הוצאת רכש)", owner:"IT / רכש", note:"לתאם מול מחלקת רכש — דורש אישור הרשאה"},
+    {id:"acc10", text:"Gemini ארגוני — פתיחת משתמש", owner:"IT"},
+    {id:"acc11", text:"מערכת תחקור ב-SP — גישת עריכה", owner:"IT / שחר"},
+  ]},
+  {id:"day1", icon:"🚀", title:"יום ראשון", sub:"סדר יום מובנה — אל תשאיר אותו לבד", items:[
+    {id:"d1", text:"08:30 — HR: כרטיס כניסה, נהלי חירום, ניירת קליטה", owner:"HR"},
+    {id:"d2", text:"09:00 — IT: אימות שכל הגישות עובדות. שחר נוכח — לא סגור עם IT לבד", owner:"שחר + IT"},
+    {id:"d3", text:"09:30 — 1-on-1 שחר (60 דק'): מטרת התפקיד, פרויקטים, נורמות עבודה, הצלחה ב-30/60/90 יום", owner:"שחר"},
+    {id:"d4", text:"11:00 — סיור פיזי: משרד, חדרי ישיבות, מדפסות, מטבחון", owner:"שחר"},
+    {id:"d5", text:"12:00 — הכרת הצוות: הצגות קצרות + ארוחה אם אפשר", owner:"שחר"},
+    {id:"d6", text:"14:00 — מסירת תיק קבלת פנים + זמן עצמאי לעבור על חומר", owner:"שחר"},
+    {id:"d7", text:"17:00 — 15 דק' check-in: מה לא ברור, מה חסר", owner:"שחר"},
+  ]},
+  {id:"week1", icon:"📅", title:"שבוע ראשון", sub:"חפיפה מובנית · ללא סדר קבוע", items:[
+    {id:"w1", text:"ניהול פרויקט הנדסי: היכרות עם אבני הדרך, תהליך הפרויקט מקצה לקצה", owner:"שחר — SP/Excel"},
+    {id:"w2", text:"ניהול פרויקט הנדסי: מעקב תקציב, גאנט, סטטוס, תחקור", owner:"שחר — SP/Excel"},
+    {id:"w3", text:"רכש: ביצוע רכש אב-טיפוס ולמחלקה — תהליך מלא ב-Oracle", owner:"שחר / רכש"},
+    {id:"w4", text:"ממשקים: היכרות עם לקוחות פנימיים (א.ת, גלע', מ.ה)", owner:"שחר"},
+    {id:"w5", text:"ממשקים: היכרות עם ספקים ומחלקת רכש", owner:"שחר"},
+    {id:"w6", text:"תחקור: היכרות עם מערכת התחקור ב-SP — מבנה, היסטוריה, איך מתעדים", owner:"שחר"},
+    {id:"w7", text:"מבנה SharePoint: איפה כל דבר, מוסכמות שמות קבצים", owner:"שחר"},
+    {id:"w8", text:"פגישות 20 דק' עם כל מהנדס בצוות — PMO יוזם בעצמו", owner:"PMO חדש"},
+    {id:"w9", text:"תחקור: כניסה למקרי עבר ב-SP, הבנת האופן שבו הצוות מתחקר", owner:"PMO חדש"},
+    {id:"w10", text:"סיכום חפיפה: מעבר על משימות פתוחות, מה ברור, מה דורש חיזוק", owner:"שחר + PMO"},
+  ]},
+  {id:"routines", icon:"🔄", title:"שגרות עבודה", sub:"להפנים עד סוף חודש 1 · מקור: קודמו בתפקיד", items:[
+    {id:"r1", text:"מעקב פרויקטים בתהליך — אחת לשבועיים עם כל מהנדס בנפרד", owner:"PMO", note:"SP/Excel — עדכון סטטוס, חסמים, תאריכים"},
+    {id:"r2", text:"עדכונים שוטפים — אחת לשבועיים עם שחר", owner:"PMO → שחר", note:"סטטוס רוחבי על הפורטפוליו כולו"},
+    {id:"r3", text:"סטטוס פרויקטים בייצור/הרכבה — אחת לשבוע", owner:"PMO", note:"בוישים או בגישה פרונטלית עם הלקוח"},
+    {id:"r4", text:"עדכון מצב פרויקטים ב-SP — יומי או לפי הצורך", owner:"PMO — עצמאי", note:"שמירה על SP מעודכן זה הבסיס של התפקיד"},
+    {id:"r5", text:"סיבוב ספקים — יומי או לפי הצורך", owner:"PMO", note:"ביקור במון, מסגרה וכו' — לוודא שסחורה בדרך"},
+    {id:"r6", text:"קבלות רכש, הרכבות וכד' — לפי הצורך", owner:"PMO", note:"מעבר על קבלת רכש ועזרה בהרכבות אב-טיפוס"},
+    {id:"r7", text:"הטמעת לקחים — בישיבות צוות", owner:"PMO + צוות", note:"העלאת לקחים מפרויקטים והטמעת נהלים חדשים"},
+  ]},
+  {id:"months", icon:"📈", title:"חודשים 1-3", sub:"בניית עצמאות הדרגתית", items:[
+    {id:"m1", text:"שב' 2-4: Shadow על 5-7 פרויקטים בשלבים שונים (תכנון / ביצוע / סגירה)", owner:"PMO + מהנדסים"},
+    {id:"m2", text:"שב' 2-4: פגישות עם קבלנים — שחר נוכח ב-2-3 הראשונות", owner:"שחר + PMO"},
+    {id:"m3", text:"סוף שב' 4: דוח סטטוס עצמאי ראשון — בדיקה ומשוב עם שחר לפני הפצה", owner:"PMO → שחר"},
+    {id:"m4", text:"חודש 2: בעלות על 15-20 פרויקטים + ייצוג עצמאי בישיבות תיאום פנימיות", owner:"PMO"},
+    {id:"m5", text:"חודש 2: הגדרת קצב דיווח קבוע — מה עולה לשחר ומתי, מה PMO סוגר לבד", owner:"שחר + PMO"},
+    {id:"m6", text:"חודש 3: Checkpoint 90 יום — מה עובד, מה לשנות, מה הצעד הבא בפיתוח", owner:"שחר + PMO"},
+  ]},
+  {id:"docs", icon:"📄", title:"מסמכים, נהלים וכלי עבודה", sub:"להכין לפני יום ראשון · אחריות: שחר", items:[
+    {id:"doc1",  text:"פורטפוליו פרויקטים: שם, סטטוס, שלב, קבלן, תאריכי מפתח, מהנדס אחראי — רשימת SP", owner:"שחר"},
+    {id:"doc2",  text:"מבנה ארגוני: שמות, תפקידים, מייל, שלוחה + ממשקים חיצוניים מרכזיים", owner:"שחר"},
+    {id:"doc3",  text:"נהלי עבודה: קצב דיווח, ערוצי תקשורת, נוהל סלמציה, איך מבקשים אישורים", owner:"שחר"},
+    {id:"doc4",  text:"איך אנחנו עובדים — 1 עמוד: ציפיות, כלים, נורמות תגובה, מתי באים לשחר ישירות", owner:"שחר"},
+    {id:"doc5",  text:"תהליך הנדסי משולב: ניהול פרויקט משולב חשמל ובקרה, אחריות, תוצרים ושלבים", owner:"שחר"},
+    {id:"doc6",  text:"נוהל ניהול סיכונים", owner:"שחר"},
+    {id:"doc7",  text:"תהליך בניית דרישות לפרויקט הנדסי", owner:"שחר"},
+    {id:"doc8",  text:"נוהל פרויקט פיתוח הנדסי", owner:"שחר"},
+    {id:"doc9",  text:"נוהל מעבר מפיתוח לייצור", owner:"שחר"},
+    {id:"doc10", text:"מדיניות רישום ודיווח רכוש קבוע בפרויקטים הנדסיים", owner:"שחר"},
+    {id:"doc11", text:"תהליכי ייצור לתכנון מכונות בתמה", owner:"שחר"},
+    {id:"doc12", text:"מעבר על כלי AI מחלקתיים", owner:"שחר"},
+  ]},
+];
+
+const CHK = `<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+
+let checked = {}, active = "pre";
+
+function prog(sec) {
+  const d = sec.items.filter(i => checked[i.id]).length;
+  return { d, t: sec.items.length, p: sec.items.length ? Math.round(d / sec.items.length * 100) : 0 };
+}
+function total() {
+  const all = S.flatMap(s => s.items), d = all.filter(i => checked[i.id]).length;
+  return { d, t: all.length, p: all.length ? Math.round(d / all.length * 100) : 0 };
+}
+
+function render() {
+  const tot = total();
+  document.getElementById('prog-fill').style.width = tot.p + '%';
+  document.getElementById('prog-pct').textContent = tot.p + '%';
+
+  document.getElementById('tabs').innerHTML = S.map(s => {
+    const p = prog(s);
+    const isA = s.id === active;
+    const badge = p.d === p.t && p.t > 0
+      ? `<span class="badge">✓</span>`
+      : p.d > 0 ? `<span class="badge">${p.d}/${p.t}</span>` : '';
+    return `<button class="tab${isA ? ' active' : ''}" onclick="setA('${s.id}')">${s.title}${badge}</button>`;
+  }).join('');
+
+  const sec = S.find(s => s.id === active);
+  const sp = prog(sec);
+  document.getElementById('sec-icon').textContent = sec.icon;
+  document.getElementById('sec-title').textContent = sec.title;
+  document.getElementById('sec-sub').textContent = sec.sub;
+  document.getElementById('sec-prog').textContent = sp.d + '/' + sp.t;
+  document.getElementById('items-list').innerHTML = sec.items.map(item => {
+    const done = !!checked[item.id];
+    return `<div class="item${done ? ' done' : ''}" onclick="tog('${item.id}')">
+      <div class="chk">${done ? CHK : ''}</div>
+      <div class="item-body">
+        <div class="item-text">${item.text}</div>
+        <div class="item-owner">אחראי: ${item.owner}</div>
+        ${item.note ? `<div class="item-note">${item.note}</div>` : ''}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function setA(id)  { active = id; save(); render(); }
+function tog(id)   { checked[id] = !checked[id]; save(); render(); }
+function resetAll(){ if (confirm('לאפס את כל הסימונים?')) { checked = {}; save(); render(); } }
+function save()    { try { localStorage.setItem('pmo_v4', JSON.stringify({ checked, active })); } catch(e){} }
+function load()    { try { const r = localStorage.getItem('pmo_v4'); if (r) { const p = JSON.parse(r); checked = p.checked || {}; active = p.active || 'pre'; } } catch(e){} }
+
+load();
+render();
+</script>
+</body>
+</html>
